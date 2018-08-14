@@ -3,9 +3,11 @@ Title: Backend for Dumping Outputs from Iterative Simulations
 Version: 0.0-1
 Authors@R: c(person("Michal", "Bojanowski", role=c("aut", "cre"), email="michal2992@gmail.com"))
 Description: Simple writing of dataframe-ish outputs from iterative simulations.
-Depends: R (>= 3.5.1)
+Depends: R (>= 3.5)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown=TRUE)
-Suggests: testthat
+Imports: tibble, dplyr, rlang
+Suggests: testthat, DBI
+RoxygenNote: 6.1.0
