@@ -30,7 +30,28 @@ test_that("writing to in-memory SQLite works", {
       b = 2:6 %>% as.numeric()
     )
   )
+
+  truncsqlite(r)
 })
+
+
+
+
+test_that("can include constant columns", {
+  out <- make_output(d, run=1)
+  for(i in 1:5) {
+    out(
+      a=i,
+      b=i+1
+    )
+  }
+  r <- out()
+})
+
+
+
+
+
 
 
 # Cleanup

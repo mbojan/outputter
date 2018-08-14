@@ -47,3 +47,47 @@ test_that("repeated calls with vectors work", {
     )
   )
 })
+
+
+
+
+test_that("can use extra cols", {
+  out <- make_output(
+    data.frame(iter=numeric(0), b=numeric(0)),
+    run = 1
+  )
+  expect_silent(
+    for(i in 1:5) {
+      out(
+        iter = i,
+        b = 1:2
+      )
+    }
+  )
+  expect_silent(
+    r <- out()
+  )
+})
+
+
+
+
+
+
+test_that("can use extra cols with anonymous df", {
+  out <- make_output(
+    NULL,
+    run = 1
+  )
+  expect_silent(
+    for(i in 1:5) {
+      out(
+        iter = i,
+        b = 1:2
+      )
+    }
+  )
+  expect_silent(
+    r <- out()
+  )
+})

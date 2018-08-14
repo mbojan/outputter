@@ -31,11 +31,13 @@ make_output <- function(output, ...) UseMethod("make_output")
 #' @export
 make_output.data.frame <- function(output, ...) {
   results <- output
+  extra <- extracols(...)
   function(...) {
     dots <- rlang::enquos(..., .named=TRUE)
     if(length(dots) == 0) {
       return(results)
     } else {
+      dots <- c(dots, extra)
       d <- tibble::data_frame(!!!dots)
       results <<- dplyr::bind_rows(results, d)
     }
@@ -115,3 +117,4 @@ make_output.default <- function(output, ...) {
     stop("don't know how to handle class ", data.class(output))
   }
 }
+
