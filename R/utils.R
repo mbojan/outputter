@@ -1,5 +1,6 @@
-# Check an make extra columns
 
+#' @importFrom magrittr "%>%"
+# Check an make extra columns
 extracols <- function(...) {
   rval <- list(...)
   nams <- names(rval)

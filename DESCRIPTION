@@ -8,6 +8,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown=TRUE)
-Imports: tibble, dplyr, rlang
-Suggests: testthat, DBI
+Imports: tibble, dplyr, rlang, magrittr
+Suggests: testthat, DBI, RSQLite, dbplyr
 RoxygenNote: 6.1.0
