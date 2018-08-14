@@ -4,6 +4,7 @@
 \alias{make_output}
 \alias{make_output.data.frame}
 \alias{make_output.tbl_dbi}
+\alias{make_output.connection}
 \alias{make_output.default}
 \title{Create output sink}
 \usage{
@@ -12,6 +13,8 @@ make_output(output, ...)
 \method{make_output}{data.frame}(output, ...)
 
 \method{make_output}{tbl_dbi}(output, ...)
+
+\method{make_output}{connection}(output, ...)
 
 \method{make_output}{default}(output, ...)
 }
@@ -42,6 +45,10 @@ include:
 }
 
 \itemize{
+\item Writing to a connection
+}
+
+\itemize{
 \item Creating and appending a data frame
 }
 }
@@ -50,6 +57,11 @@ If \code{output} is a data frame then the calls to the output sink
 created will append that data frame.
 
 If \code{output} is an object inheriting from \code{tbl_dbi}...
+
+If \code{output} is a connection object then arguments in \code{...} are
+passed to \code{\link[=cat]{cat()}} with argument \code{file} given the connection. Argument names
+are not included in the output nor checked. The order of the values is
+determined by the order of the arguments.
 
 If \code{output} is \code{NULL} then the result is an "blank" data frame
 output sink. The first call to the sink will instantiate the columns and

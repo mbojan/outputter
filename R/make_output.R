@@ -68,6 +68,36 @@ make_output.tbl_dbi <- function(output, ...) {
   }
 }
 
+
+
+
+
+
+#' @rdname make_output
+#'
+#' @description - Writing to a connection
+#'
+#' @details If `output` is a connection object then arguments in `...` are
+#'   passed to [cat()] with argument `file` given the connection. Argument names
+#'   are not included in the output nor checked. The order of the values is
+#'   determined by the order of the arguments.
+#'
+#' @export
+make_output.connection <- function(output, ...) {
+  function(...) {
+    cat(
+      ...,
+      "\n",
+      file = output,
+      append = TRUE
+    )
+  }
+}
+
+
+
+
+
 #' @rdname make_output
 #'
 #' @description
