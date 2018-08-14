@@ -57,6 +57,7 @@ make_output.tbl_dbi <- function(output, ...) {
   requireNamespace("DBI")
   function(...) {
     dots <- rlang::enquos(..., .named=TRUE)
+    if(length(dots) == 0) return(output)
     d <- tibble::data_frame(!!!dots)
     DBI::dbWriteTable(
       conn = output$src$con,
