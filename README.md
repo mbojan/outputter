@@ -1,6 +1,9 @@
 
 # outputter
 
+[![Travis build
+status](https://travis-ci.org/mbojan/outputter.svg?branch=master)](https://travis-ci.org/mbojan/outputter)
+
 The design goal of **outputter** is to provide a simple closure-based
 syntax for saving/writing output from iterative simulations such that:
 
