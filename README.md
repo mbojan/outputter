@@ -20,7 +20,7 @@ Install development version from GitHub with
 devtools::install_github("mbojan/outputter")
 ```
 
-## Examples of use
+## Basic usage
 
 A common problem when writing iterative simulations is implementing
 several options of saving the results. Ideally one would like to be able
@@ -28,9 +28,88 @@ to “factor-out” the actual backend, i.e. how the results are saved,
 outside of the simulation code. This is what **outputter** attempts to
 achieve with a concept of “output sinks”.
 
-### Basic use
+An output sink is a function having only `...` (`?dots`) as a signature
+that can be called with named arguments expecting scalars or vectors.
+For example, if `out()` is an output sink then we want to write
 
-### An implementation of a mock-up simulation function
+``` r
+for(i in 1:5) {
+  out( 
+    iteration=i,
+    a = i + 1
+  )
+}
+```
+
+The call to `out()` above will save the values given to its arguments
+somwhere (append a data frame, write to a file, or a database etc.).
+
+Package **outputter** provides a function `make_output()` that creates
+output sinks of various types based on the class of its arguments:
+
+1.  Append an existing data frame
+
+<!-- end list -->
+
+``` r
+library(outputter)
+out <- make_output(data.frame(a=numeric(0), b=numeric(0)))
+out(a=1, b=2)
+#>   a b
+#> 1 1 2
+out(a=2, b=1)
+#>   a b
+#> 1 1 2
+#> 2 2 1
+out()
+#>   a b
+#> 1 1 2
+#> 2 2 1
+```
+
+2.  Append an existing data frame with a “static” column(s)
+
+<!-- end list -->
+
+``` r
+out <- make_output(data.frame(a=numeric(0), b=numeric(0)), static=1)
+out(a=1, b=2)
+#>   a b static
+#> 1 1 2      1
+out(a=2, b=1)
+#>   a b static
+#> 1 1 2      1
+#> 2 2 1      1
+out()
+#>   a b static
+#> 1 1 2      1
+#> 2 2 1      1
+```
+
+3.  Append a table in a database
+
+<!-- end list -->
+
+``` r
+# In-memory SQLite database
+con <- DBI::dbConnect(RSQLite::SQLite(), ":memory:")
+# An empty table in database
+DBI::dbWriteTable(con, "output", data.frame(a=numeric(0), b=numeric(0)))
+# A tbl_dbi table "pointing to" the database table
+d <- dplyr::tbl(con, "output")
+
+out <- make_output(d)
+out(a=1, b=2)
+out(a=2, b=1)
+dplyr::collect(d)
+#> # A tibble: 2 x 2
+#>       a     b
+#>   <dbl> <dbl>
+#> 1     1     2
+#> 2     2     1
+```
+
+## An example implementation of a mock-up simulation function
 
 Consider the following function performing a mock-up iterative
 simulation:
