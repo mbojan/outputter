@@ -67,6 +67,14 @@ test_that("can use extra cols", {
   expect_silent(
     r <- out()
   )
+  expect_equivalent(
+    r,
+    data.frame(
+      iter = rep(1:5, each=2),
+      b = rep(1:2, 5),
+      run = rep(1, 10)
+    )
+  )
 })
 
 
@@ -89,5 +97,13 @@ test_that("can use extra cols with anonymous df", {
   )
   expect_silent(
     r <- out()
+  )
+  expect_equivalent(
+    r,
+    data.frame(
+      iter = rep(1:5, each=2),
+      b = rep(1:2, 5),
+      run = rep(1, 10)
+    )
   )
 })
